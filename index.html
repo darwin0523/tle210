@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TLE 6 Week 5 · Game Set 3</title>
+<style>
+:root{--bg:#fff0d9;--card:#fff;--ink:#2e1a0d;--acc:#ff6a00;--c2:#ffb800;--g1:#ff6a00;--g2:#ff2d6f;--ok:#1fb86a;--bad:#e5384b;--soft:#ffe0b0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body[data-s=i]{--bg:#e4f1ff;--acc:#1a73ff;--c2:#00c2a8;--g1:#1a73ff;--g2:#00c2a8;--soft:#cfe5ff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--card:#2a2236;--ink:#fff3e6}body{--bg:#1a1424!important;--soft:#3b2f52!important}}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 15% 0,var(--soft),transparent 55%),var(--bg);color:var(--ink);font-family:system-ui,sans-serif;padding:12px;text-align:center;min-height:100vh}
+.wrap{max-width:520px;margin:0 auto}
+h1{font-size:1.6rem;margin:4px 0;background:linear-gradient(90deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}h2{font-size:1rem;margin:12px 0 4px}
+.sub{opacity:.8;font-size:.85rem}.hide{display:none!important}
+.card{background:var(--card);border-radius:18px;padding:12px;box-shadow:0 3px 10px #0003;margin:8px 0}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;color:inherit}
+.b{background:var(--acc);color:#fff;padding:12px 20px;font-weight:800;margin:4px}.b.alt{background:var(--soft);color:var(--ink)}.b.big{font-size:1.2rem;padding:15px 30px}
+.chip{background:var(--soft);padding:9px 14px;margin:3px;font-weight:700;border:2px solid transparent}.chip.on{border-color:var(--acc);background:var(--acc);color:#fff}
+input,select,textarea{font:inherit;color:inherit;background:var(--soft);border:0;border-radius:10px;padding:8px}
+textarea{width:100%;height:110px;font-size:.76rem;text-align:left}
+.pl{display:inline-flex;gap:4px;align-items:center;margin:3px}.pl input{width:125px}
+.mid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.game{border-radius:20px;padding:16px 6px;color:#fff;font-weight:900;box-shadow:0 5px 0 #0003}
+.game small{display:block;font-weight:500;opacity:.92;font-size:.72rem}
+.game .e{font-size:3.2rem;display:block;animation:bob 1.6s infinite alternate}@keyframes bob{to{transform:translateY(-6px) rotate(6deg) scale(1.08)}}
+.hud{display:flex;justify-content:space-between;font-weight:800;align-items:center;gap:6px}
+.bar{height:10px;background:var(--soft);border-radius:6px;overflow:hidden;margin:5px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g1),var(--g2));width:100%;transition:width 1s linear}
+.pic{font-size:3rem;line-height:1.1}.q{font-size:1.05rem;font-weight:800;margin:6px 0}
+.opts{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px}.opt{background:var(--soft);padding:12px 8px;font-weight:800}.opt.x{opacity:.35}
+.ok2{background:var(--ok)!important;color:#fff}.no{background:var(--bad)!important;color:#fff}
+.tf2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.tf2 button{padding:16px;font-weight:900;font-size:1.1rem;background:var(--soft)}
+.tap{width:100%;padding:22px;font-size:1.4rem;font-weight:900;background:linear-gradient(var(--g1),var(--g2));color:#fff;border-radius:20px;box-shadow:0 6px 0 #0004;touch-action:none;user-select:none}.tap:active{transform:translateY(4px)}
+.win{background:#2b2b3a;border-radius:14px;overflow:hidden;text-align:left;margin:6px 0}
+.win .tt{background:#185abd;color:#fff;padding:5px 10px;font-size:.75rem;font-weight:700}
+.tabs{display:flex;background:#e7e7ee}.tabs button{flex:1;padding:8px 2px;font-size:.78rem;font-weight:800;background:transparent;color:#222;border-radius:0}.tabs button.on{background:#fff;border-bottom:3px solid #185abd}
+.rib{background:#fff;color:#222;display:flex;flex-wrap:wrap;gap:6px;padding:8px;min-height:84px}.rib button{background:#f0f2fa;color:#222;padding:8px 6px;font-size:.74rem;font-weight:700;border-radius:8px;min-width:78px}
+.pg{background:#fff;color:#444;margin:8px;padding:10px;font-size:.7rem;border-radius:4px;min-height:60px}
+.cupw{display:flex;justify-content:center;gap:10px;align-items:center}
+.pad{padding:16px 6px;border-radius:18px;font-weight:900;color:#fff;font-size:1rem;box-shadow:0 5px 0 #0004;transition:.1s;opacity:.85}.pad.lit{opacity:1;transform:scale(1.07);filter:brightness(1.5);box-shadow:0 0 22px 4px #fff}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.pad .e{font-size:2.2rem;display:block}
+.bomb{font-size:5rem;display:inline-block;animation:sk 1s infinite}@keyframes sk{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.tm{display:inline-block;background:var(--card);border-radius:12px;padding:5px 9px;margin:3px;font-weight:800;font-size:.82rem;border:3px solid transparent}.tm.h{border-color:var(--bad);animation:sk .4s infinite}.tm.d{opacity:.3}
+.boss{font-size:5.5rem;display:inline-block;animation:bob 1.2s infinite alternate}.boss.hit{animation:sh .35s}
+.hp{height:16px;background:#0003;border-radius:9px;overflow:hidden;margin:6px 0}.hp i{display:block;height:100%;background:linear-gradient(90deg,#e5384b,#ff8a00);width:100%;transition:width .3s}
+.shake{animation:sh .4s}@keyframes sh{25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+.row{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;border-radius:10px;background:var(--soft);margin:5px 0;font-weight:700;text-align:left}.row.w{background:var(--acc);color:#fff}
+.fall{position:fixed;top:-30px;font-size:1.8rem;animation:fl 2.4s linear forwards;pointer-events:none;z-index:9}@keyframes fl{to{transform:translateY(110vh) rotate(360deg)}}
+</style></head><body data-s="f"><div class="wrap">
+
+<div id="home">
+ <div style="font-size:2.2rem">🧪💣🎹🐲</div>
+ <h1>TLE 6 · Week 5 · Game Set 3</h1>
+ <div class="sub">Grade 6 · Measuring Techniques &amp; Safety · Word Formatting</div>
+ <div class="card"><h2>Choose your lesson</h2><div id="subs"></div>
+  <h2>Players / Teams</h2><select id="pn"><option value="1">1 (Solo)</option><option>2</option><option>3</option><option selected>4</option></select><div id="pnames"></div>
+  <h2>Game time</h2><select id="time"><option value="60">1 minute</option><option value="90">1 minute 30 seconds</option><option value="120">2 minutes</option></select></div>
+ <div class="mid">
+  <button class="game" data-g="lab" style="background:linear-gradient(135deg,#ff8a00,#ff2d55)"><span class="e" id="le">🧪</span><span id="ln">Pour Precisely</span><small id="ld">Hands-on lab</small></button>
+  <button class="game" data-g="pot" style="background:linear-gradient(135deg,#e5384b,#7a3cff)"><span class="e">💣</span>Hot Potato Bomb<small>Pass it before it explodes!</small></button>
+  <button class="game" data-g="sim" style="background:linear-gradient(135deg,#1fb86a,#0a8f8f)"><span class="e">🎹</span>Memory Pads<small>Watch, listen, repeat</small></button>
+  <button class="game" data-g="boss" style="background:linear-gradient(135deg,#7a3cff,#1f6bff)"><span class="e">🐲</span>Boss Battle<small>Answer to attack!</small></button>
+ </div>
+ <button class="b alt" id="edit">✏️ Edit questions &amp; puzzles</button>
+</div>
+
+<div id="editor" class="hide">
+ <h1>✏️ Edit Games</h1><div class="sub" id="esub"></div>
+ <div class="card">
+ <h2>Quiz (Boss Battle, Hot Potato): Topic | Emoji | Question | Correct | Wrong | (Wrong)</h2><textarea id="t0" style="height:150px"></textarea>
+ <h2>True or False: Statement | True or False</h2><textarea id="t1"></textarea>
+ <h2 id="h2">Lab</h2><textarea id="t2"></textarea>
+ <h2>Memory Pads (4 to 6 lines): Emoji + Label</h2><textarea id="t3" style="height:90px"></textarea></div>
+ <button class="b" id="save">💾 Save</button><button class="b alt" id="reset">Reset</button><button class="b alt" id="back">← Back</button><div class="sub" id="emsg"></div>
+</div>
+
+<div id="stage" class="hide"></div>
+<div id="end" class="hide"><h1 id="et"></h1><div class="card" id="eb"></div><button class="b" id="again">↺ Play again</button></div>
+</div>
+<script>
+const SUBJ=[{k:'f',ic:'🍳',n:'FCS · Measuring',d:[`Measuring|🌾|Which tool is best for measuring flour?|Dry measuring cup|Liquid measuring cup|Fork
+Measuring|🥛|Milk is measured with a...|Liquid measuring cup|Dry measuring cup|Chopping board
+Measuring|🧂|Baking powder is measured with a...|Measuring spoon|Whisk|Peeler
+Measuring|🟤|Brown sugar is scooped and...|Packed compactly|Shaken|Poured
+Measuring|🧈|Shortening is pressed into the cup until...|Full|Half|Spilling
+Measuring|🥣|Why is accurate measuring important?|It affects texture and taste|It makes tools shiny|It is not important
+Safety|🧼|After measuring, you should...|Clean the area and return tools|Leave tools on the table|Hide the tools
+Safety|🛢️|You spill oil on the table. You should...|Wipe it up right away|Ignore it|Walk over it
+Safety|👀|Check the measuring markings...|Every time|Never|Only sometimes
+Steps|🔢|What is the first step in safe measuring?|Identify the ingredient|Clean the area|Pour the liquid
+Steps|🔍|After measuring carefully, you...|Check the measurement|Throw it away|Skip ahead
+Dry or Liquid|🥞|Flour is...|Dry|Liquid
+Dry or Liquid|🫒|Cooking oil is...|Liquid|Dry`,`Dry ingredients include flour, sugar and baking powder.|True
+Milk, water and oil are liquid ingredients.|True
+Liquids should be estimated by just looking.|False
+When measuring flour, shake the cup to settle it.|False
+Level off dry ingredients with a spatula.|True
+Liquids are read at eye level.|True
+You should lift the cup while reading a liquid measure.|False
+Brown sugar is packed compactly into the cup.|True
+White sugar needs sifting only if it is lumpy.|True
+Measuring tools are returned properly after use.|True
+It is safe to measure without checking the markings.|False
+The work area should be kept clean and dry.|True`,`🥛 ½ cup of milk|0.5
+💧 1 cup of water|1
+🫒 ¼ cup of cooking oil|0.25
+🧃 ¾ cup of fruit juice|0.75
+🌾 ½ cup of flour|0.5
+🍚 ¾ cup of white sugar|0.75
+🟤 ¼ cup of brown sugar|0.25`,`🌾 Flour
+🥛 Milk
+🧈 Margarine
+🧂 Baking powder`]},{k:'i',ic:'💻',n:'ICT · Word Formatting',d:[`Features|🏷️|The My Learning Portfolio watermark word is...|SAMPLE|DRAFT|HELLO
+Features|📝|The Technology in Learning document watermark is...|DRAFT|SAMPLE|SCHOOL
+Features|👤|In the portfolio, the header shows your...|Name|Grade and section|Watermark
+Features|🎓|In the portfolio, the footer shows your...|Grade and section|Name|Page color
+Features|🔢|Which feature shows the order of pages?|Page Number|Watermark|Header
+Features|🖼️|Lines or designs around the page edges are...|Page Borders|Page Color|Footer
+Features|🎨|Which feature changes the page background?|Page Color|Watermark|Header
+Saving|💾|The portfolio is saved as...|My_Learning_Portfolio_Name.docx|portfolio.mp3|Name.png
+Saving|📄|The footer of the Technology activity is...|Grade 6 – ICT Activity|Your name|DRAFT
+Saving|✨|A well-formatted document should be...|Clear, organized and readable|Crowded and messy|Empty`,`A watermark is faint text or an image behind the main content.|True
+A page border is placed around the edges of a page.|True
+The header is located at the bottom of the page.|False
+A footer can contain the learner's grade and section.|True
+Page numbers show the order of pages.|True
+Page color changes the background color of the page.|True
+A watermark may show words like DRAFT or SAMPLE.|True
+The footer is at the top of the page.|False
+A header can hold a name, title or subject.|True
+A watermark must hide the main text.|False
+A well-formatted document is clear, organized and readable.|True
+Formatting features should never be combined.|False`,`Add the word SAMPLE behind the text|Design|Watermark
+Change the background color of the page|Design|Page Color
+Put a frame around the page edges|Design|Page Borders
+Show the page number on every page|Insert|Page Number
+Type your name at the top of every page|Insert|Header
+Type your grade and section at the bottom|Insert|Footer
+Mark the document as DRAFT|Design|Watermark
+Add a picture to the page|Insert|Pictures`,`💧 Watermark
+🎨 Page Color
+🖼️ Page Border
+🔢 Page Number`]}];
+const $=id=>document.getElementById(id),R=a=>a[Math.random()*a.length|0],S=a=>[...a].sort(()=>Math.random()-.5);
+const AV=["🦊","🐯","🐼","🦄"],fmt=s=>s==60?"1 minute":s==90?"1 minute 30 seconds":"2 minutes";
+let si=0,QZ=[],TF=[],LB=[],PD=[],P=[],T=60,SI=0,G="",ct=null,pt=null,raf=null,AC=null;
+function rd(k,d){try{return localStorage.getItem(k)||d}catch(e){return d}}
+const ICT=()=>SUBJ[si].k=="i";
+function ld(){const s=SUBJ[si];document.body.dataset.s=s.k;s.d.forEach((d,n)=>$("t"+n).value=rd("w5c"+s.k+n,d));parse();$("esub").textContent=s.ic+" "+s.n;
+ $("le").textContent=ICT()?"🖱️":"🧪";$("ln").textContent=ICT()?"Ribbon Hunt":"Pour Precisely";$("ld").textContent=ICT()?"Find the right tab & button":"Fill the cup to the mark";
+ $("h2").textContent=ICT()?"Ribbon Hunt: Task | Tab | Button":"Pour Precisely: Emoji + amount | cups as a number (0.25, 0.5, 0.75, 1)"}
+const L=(id,m)=>$(id).value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(p=>p.length>=m&&p[0]);
+function parse(){QZ=L("t0",5).map(p=>({c:p[0],p:p[1],q:p[2],a:p[3],w:p.slice(4).filter(Boolean)}));TF=L("t1",2).map(p=>({s:p[0],a:/^t/i.test(p[1])}));
+ LB=ICT()?L("t2",3).map(p=>({q:p[0],tab:p[1],btn:p[2]})):L("t2",2).filter(p=>!isNaN(+p[1])&&+p[1]>0&&+p[1]<=1).map(p=>({q:p[0],v:+p[1]}));
+ PD=$("t3").value.split("\n").map(x=>x.trim()).filter(Boolean).slice(0,6)}
+function show(id){["home","editor","stage","end"].forEach(x=>$(x).classList.toggle("hide",x!==id))}
+function stop(){clearInterval(ct);clearInterval(pt);cancelAnimationFrame(raf);raf=null}
+function subs(){$("subs").innerHTML=SUBJ.map((s,i)=>`<button class="chip ${i==si?"on":""}" data-i="${i}">${s.ic} ${s.n}</button>`).join("");
+ $("subs").querySelectorAll(".chip").forEach(e=>e.onclick=()=>{si=+e.dataset.i;subs();ld()})}
+function pn(){const n=+$("pn").value;$("pnames").innerHTML=Array.from({length:n},(_,i)=>`<span class="pl">${AV[i]}<input value="${n==1?"Player":"Team "+(i+1)}" maxlength="14"></span>`).join("")}
+$("pn").onchange=pn;$("edit").onclick=()=>{ld();show("editor")};$("back").onclick=()=>{ld();show("home")};
+$("save").onclick=()=>{parse();try{SUBJ[si].d.forEach((d,n)=>localStorage.setItem("w5c"+SUBJ[si].k+n,$("t"+n).value))}catch(e){}$("emsg").textContent="✅ Saved!"};
+$("reset").onclick=()=>{try{[0,1,2,3].forEach(n=>localStorage.removeItem("w5c"+SUBJ[si].k+n))}catch(e){}ld();$("emsg").textContent="Reset to default."};
+$("again").onclick=()=>show("home");
+function party(){for(let k=0;k<26;k++){const e=document.createElement("div");e.className="fall";e.textContent=["🎉","⭐","🏆","🥣","💻"][k%5];e.style.left=Math.random()*95+"vw";e.style.animationDelay=Math.random()*.9+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),3400)}}
+function beep(f,d){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.type="triangle";g.gain.value=.15;o.connect(g);g.connect(AC.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.stop(AC.currentTime+d)}catch(e){}}
+document.querySelectorAll(".game").forEach(b=>b.onclick=()=>{parse();const g=b.dataset.g;
+ if(((g=="boss"||g=="pot")&&(QZ.length<3||TF.length<2))||(g=="lab"&&LB.length<2)||(g=="sim"&&PD.length<4)){alert("Not enough items. Open ✏️ Edit and add more.");return}
+ G=g;T=+$("time").value;P=[...$("pnames").querySelectorAll("input")].map((e,i)=>({n:e.value||"Team "+(i+1),av:AV[i],sc:0,note:""}));SI=0;beep(440,.1);
+ g=="pot"?potato():ready()});
+const INFO={lab:()=>ICT()?"A task appears. Click the correct TAB, then the correct BUTTON in the ribbon of this pretend Word window. Fast and right = more points!":"HOLD the pour button to fill the measuring cup. Stop on the line for the amount shown, then press ✅ Check. Spilling over scores zero!",
+ sim:()=>"Watch the pads light up and play sounds. Then repeat the pattern in the same order. Each round adds one more!",
+ boss:()=>"Answer questions to attack the boss! Streaks make bigger hits. Wrong answers cost a ❤️. Defeat the boss for a bonus!"};
+function ready(){const p=P[SI];$("stage").innerHTML=`<h1>${p.av} ${p.n}, get ready!</h1><div class="card"><div style="font-size:3rem">${{lab:ICT()?"🖱️":"🧪",sim:"🎹",boss:"🐲"}[G]}</div><div>${INFO[G]()}</div><div class="sub" style="margin-top:6px">Time: ${fmt(T)}</div></div><button class="b big" id="go">▶ Go!</button><br><button class="b alt" id="mn">← Menu</button>`;
+ show("stage");$("go").onclick=()=>({lab:ICT()?ribbon:pour,sim,boss})[G]();$("mn").onclick=()=>{stop();show("home")}}
+function hud(p,x){$("stage").innerHTML=`<div class="hud"><span>${p.av} ${p.n}</span><span>⭐ <span id="sc">0</span></span><span>⏱ <span id="tc"></span></span></div><div class="bar"><i id="tb2"></i></div>${x}`}
+function runT(onEnd){let left=T;clearInterval(ct);const tk=()=>{$("tc").textContent=Math.floor(left/60)+":"+String(left%60).padStart(2,"0");$("tb2").style.width=(left/T*100)+"%";if(left<=0){stop();onEnd();return}left--};tk();ct=setInterval(tk,1000);return()=>left}
+function fin(score,note){stop();const p=P[SI];p.sc=score;p.note=note||"";if(++SI<P.length)ready();else results()}
+function results(){const r=[...P].sort((a,b)=>b.sc-a.sc),tie=r.length>1&&r[0].sc==r[1].sc;
+ $("et").textContent=P.length==1?"⏰ Time's up!":tie?"🤝 It's a tie!":"🏆 "+r[0].n+" wins!";
+ $("eb").innerHTML=r.map((p,i)=>`<div class="row ${i==0&&!tie?"w":""}"><span>${i+1}. ${p.av} ${p.n}<br><small>${p.note}</small></span><span>⭐ ${p.sc}</span></div>`).join("");show("end");party()}
+const bad=el=>{if(!el)return;el.classList.remove("shake");void el.offsetWidth;el.classList.add("shake")};
+// ---------- 🧪 Pour Precisely (FCS)
+function pour(){const p=P[SI];let sc=0,n=0,lvl=0,tg,pouring=false,locked=false,best=null;
+ const Y=v=>220-180*v;
+ hud(p,`<div class="card"><div class="q" id="pq"></div><div class="cupw"><svg id="cup" viewBox="0 0 170 240" width="190" height="260"><rect id="liq" x="42" y="220" width="76" height="0" fill="#9ad7ff"/><path d="M40 20 V220 H120 V20" fill="none" stroke="#6b7a90" stroke-width="5"/>${[.25,.5,.75,1].map(v=>`<line x1="40" x2="${v==1?64:52}" y1="${Y(v)}" y2="${Y(v)}" stroke="#6b7a90" stroke-width="3"/><text x="128" y="${Y(v)+5}" font-size="15" fill="currentColor" font-weight="800">${["¼","½","¾","1"][[.25,.5,.75,1].indexOf(v)]}</text>`).join("")}<text x="150" y="30" font-size="22">⚠️</text></svg></div><div id="pr" style="min-height:2.6em;font-weight:800"></div></div><button class="tap" id="pb">💧 HOLD TO POUR</button><div><button class="b ok" id="ck" style="background:var(--ok)">✅ Check</button><button class="b alt" id="em">🗑️ Empty</button></div>`);
+ const draw=()=>{const h=Math.min(200,180*lvl);$("liq").setAttribute("y",220-h);$("liq").setAttribute("height",h)};
+ const nx=()=>{tg=R(LB);lvl=0;locked=false;draw();$("pq").textContent="Measure: "+tg.q;$("pr").textContent=""};
+ const go=()=>{if(pouring&&!locked&&lvl<1.11){lvl+=.011;draw()}};
+ const down=e=>{e.preventDefault();pouring=true};const up=()=>{pouring=false};
+ $("pb").onpointerdown=down;window.onpointerup=up;clearInterval(pt);pt=setInterval(go,30);
+ $("em").onclick=()=>{if(!locked){lvl=0;draw()}};
+ $("ck").onclick=()=>{if(locked)return;locked=true;const err=Math.abs(lvl-tg.v),over=lvl>1.0+0.001&&tg.v<=1&&lvl>=1.1;
+  const pts=over?0:Math.max(0,100-Math.round(err*500));sc+=pts;n++;if(best==null||err<best)best=err;$("sc").textContent=sc;
+  $("pr").innerHTML=over?"💦 Spilled over! +0":(err<.03?"🎯 PERFECT!":err<.1?"👏 Very close!":"😅 Keep practicing!")+`<br>Off by ${(err*100).toFixed(0)}% of a cup · +${pts}`;setTimeout(()=>{if($("pb"))nx()},1500)};
+ nx();runT(()=>{window.onpointerup=null;fin(sc,n+" cups measured"+(best!=null?" · closest "+(best*100).toFixed(0)+"% off":""))})}
+// ---------- 🖱️ Ribbon Hunt (ICT)
+const RIB={Home:["📋 Paste","🅱️ Bold","🔤 Italic","🔠 Underline","🎨 Font Color","• Bullets"],Insert:["🖼️ Pictures","📊 Table","⬆️ Header","⬇️ Footer","🔢 Page Number","🔷 Shapes"],Design:["🎭 Themes","💧 Watermark","🌈 Page Color","📐 Page Borders","🔡 Fonts"],Layout:["↔️ Margins","📄 Orientation","📏 Size","📰 Columns"],View:["🔍 Zoom","📐 Ruler","▦ Gridlines"]};
+function ribbon(){const p=P[SI];let sc=0,n=0,mis=0,tab="Home",tk,t0=0;const tabs=Object.keys(RIB),nm=s=>s.replace(/^\S+\s/,"").toLowerCase();
+ hud(p,`<div class="card"><div class="sub">Task</div><div class="q" id="rq"></div></div><div class="win"><div class="tt">📄 Document1 – Word</div><div class="tabs" id="tb"></div><div class="rib" id="rb"></div><div class="pg">MY LEARNING PORTFOLIO — Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div></div><div class="sub" id="rm"></div>`);
+ const dr=()=>{$("tb").innerHTML=tabs.map(t=>`<button class="${t==tab?"on":""}">${t}</button>`).join("");$("rb").innerHTML=RIB[tab].map(b=>`<button>${b}</button>`).join("");
+  $("tb").querySelectorAll("button").forEach((b,i)=>b.onclick=()=>{tab=tabs[i];dr()});
+  $("rb").querySelectorAll("button").forEach(b=>b.onclick=()=>{if(nm(b.textContent)==tk.btn.toLowerCase()&&tab.toLowerCase()==tk.tab.toLowerCase()){const fast=performance.now()-t0<6000;sc+=mis?5:fast?15:10;n++;$("sc").textContent=sc;$("rm").textContent="✅ Correct!";nx()}
+   else{mis++;bad($("rb"));$("rm").textContent=nm(b.textContent)==tk.btn.toLowerCase()?"Right button, wrong tab! Check the "+"other tabs.":"Not that one. Try again!"}})};
+ const nx=()=>{tk=R(LB);mis=0;tab="Home";t0=performance.now();$("rq").textContent=tk.q;dr()};
+ nx();runT(()=>fin(sc,n+" tasks done"))}
+// ---------- 💣 Hot Potato
+function potato(){const tm=P.map(p=>({hp:3,alive:true,ok:0}));let hold=0,t0=0,fuse=0,q=null,dead=false;
+ $("stage").innerHTML=`<div class="hud"><span>💣 Hot Potato</span><span>⏱ <span id="tc"></span></span></div><div class="bar"><i id="tb2"></i></div><div id="tl"></div><div id="bm" style="margin:6px 0"><span class="bomb" id="bb">💣</span></div><div class="card" id="pq"></div>`;show("stage");
+ const teams=()=>$("tl").innerHTML=P.map((p,i)=>`<span class="tm ${i==hold&&tm[i].alive?"h":""} ${tm[i].alive?"":"d"}">${p.av} ${p.n} ${"❤️".repeat(tm[i].hp)||"💀"}</span>`).join("");
+ const alive=()=>tm.filter(x=>x.alive).length,nextA=i=>{for(let k=1;k<=P.length;k++){const j=(i+k)%P.length;if(tm[j].alive)return j}return i};
+ const newQ=()=>{if(Math.random()<.65){const b=R(QZ);$("pq").innerHTML=`<div class="sub">${P[hold].av} ${P[hold].n} has the bomb!</div><div class="pic">${b.p}</div><div class="q">${b.q}</div><div class="opts">${S([b.a,...b.w]).map(o=>`<button class="opt">${o}</button>`).join("")}</div>`;
+   $("pq").querySelectorAll(".opt").forEach(e=>e.onclick=()=>res(e.textContent==b.a))}
+  else{const x=R(TF);$("pq").innerHTML=`<div class="sub">${P[hold].av} ${P[hold].n} has the bomb!</div><div class="q">${x.s}</div><div class="tf2"><button>✅ True</button><button>❌ False</button></div>`;
+   $("pq").querySelectorAll("button").forEach((b,i)=>b.onclick=()=>res((i==0)==x.a))}};
+ const res=ok=>{if(dead)return;if(ok){tm[hold].ok++;beep(660,.1);hold=nextA(hold);teams();newQ()}else{beep(180,.2);bad($("pq"));newQ()}};
+ const bomb=()=>{fuse=(8+Math.random()*10)*1000;t0=performance.now();teams();newQ()};
+ const boom=()=>{tm[hold].hp--;if(tm[hold].hp<=0)tm[hold].alive=false;beep(120,.5);$("bb").textContent="💥";$("pq").innerHTML=`<div class="pic">💥</div><div class="q">BOOM! ${P[hold].av} ${P[hold].n} loses a ❤️</div>`;
+  if(P.length>1&&alive()<=1||P.length==1&&!tm[0].alive){over();return}
+  setTimeout(()=>{if(dead)return;$("bb").textContent="💣";hold=tm[hold].alive?nextA(hold):nextA(hold);bomb()},1400);pause=true;setTimeout(()=>pause=false,1400)};
+ let pause=false;
+ const over=()=>{if(dead)return;dead=true;stop();P.forEach((p,i)=>{p.sc=tm[i].hp*20+tm[i].ok*5;p.note=(tm[i].alive?"Survived with "+tm[i].hp+" ❤️":"Out of lives")+" · "+tm[i].ok+" correct"});setTimeout(results,900)};
+ bomb();clearInterval(pt);pt=setInterval(()=>{if(dead||pause)return;const e=performance.now()-t0;$("bb").style.animationDuration=Math.max(.12,(1-e/fuse))+"s";if(e>=fuse)boom()},100);
+ runT(()=>over())}
+// ---------- 🎹 Memory Pads
+function sim(){const p=P[SI],pads=PD.map(x=>({e:x.split(" ")[0],l:x.split(" ").slice(1).join(" ")})),CL=["#ff2d6f","#ffb800","#1fb86a","#1a73ff","#9b5de5","#fb8500"],FQ=[262,330,392,494,587,659];
+ let seq=[],pos=0,sc=0,runs=0,best=0,input=false;
+ hud(p,`<div class="card"><div class="q" id="sm">Get ready…</div><div class="sub">Round <b id="rn">0</b></div></div><div class="pads" id="pd">${pads.map((x,i)=>`<button class="pad" style="background:${CL[i]}"><span class="e">${x.e}</span>${x.l}</button>`).join("")}</div>`);
+ const btn=i=>$("pd").children[i],lit=i=>{const b=btn(i);if(!b)return;b.classList.add("lit");beep(FQ[i],.3);setTimeout(()=>b&&b.classList.remove("lit"),320)};
+ const play=()=>{input=false;$("sm").textContent="👀 Watch…";$("rn").textContent=seq.length;seq.forEach((s,k)=>setTimeout(()=>{if($("pd"))lit(s)},700+k*650));setTimeout(()=>{if($("pd")){input=true;pos=0;$("sm").textContent="🎯 Your turn!"}},700+seq.length*650)};
+ const add=()=>{seq.push(Math.random()*pads.length|0);play()};
+ [...$("pd").children].forEach((b,i)=>b.onclick=()=>{if(!input)return;lit(i);
+  if(i==seq[pos]){pos++;if(pos==seq.length){sc+=10;$("sc").textContent=sc;best=Math.max(best,seq.length);input=false;$("sm").textContent="✅ Great!";setTimeout(()=>{if($("pd"))add()},800)}}
+  else{input=false;beep(150,.4);runs++;bad($("pd"));$("sm").textContent="❌ Oops! New run…";seq=[];setTimeout(()=>{if($("pd"))add()},1200)}});
+ setTimeout(()=>{if($("pd"))add()},600);runT(()=>fin(sc,"Longest pattern: "+best))}
+// ---------- 🐲 Boss Battle
+const BOSS={f:[["🐲","Messy Kitchen Dragon"],["👹","Spill Monster"],["🦠","Germ Gang"]],i:[["👾","Format Bug"],["🤖","Draft Robot"],["🐛","Lag Worm"]]};
+function boss(){const p=P[SI];let hearts=3,combo=0,dmg=0,sc=0,hp=100,max=100,bi=0,beaten=0,lock=false;
+ hud(p,`<div class="card"><div class="boss" id="bo"></div><div class="q" id="bn"></div><div class="hp"><i id="hpb"></i></div><div class="hud"><span id="ht" style="font-size:1.3rem"></span><span>🔥 Combo <b id="cb">0</b></span></div></div><div class="card" id="bq"></div>`);
+ const bs=BOSS[SUBJ[si].k],nb=()=>{const b=bs[bi%bs.length];bi++;max=hp=80+bi*20;$("bo").textContent=b[0];$("bn").textContent=b[1]+" (Level "+bi+")";upd()};
+ const upd=()=>{$("hpb").style.width=(Math.max(0,hp)/max*100)+"%";$("ht").textContent="❤️".repeat(hearts)+"🖤".repeat(3-hearts);$("cb").textContent=combo};
+ const atk=ok=>{if(lock)return;lock=true;if(ok){const d=10+Math.min(combo,4)*5;combo++;hp-=d;dmg+=d;sc+=d;$("sc").textContent=sc;beep(660,.1);$("bo").classList.remove("hit");void $("bo").offsetWidth;$("bo").classList.add("hit");
+   if(hp<=0){beaten++;sc+=50;$("sc").textContent=sc;beep(880,.3);$("bq").innerHTML=`<div class="pic">🏆</div><div class="q">Boss defeated! +50</div>`;setTimeout(()=>{if($("bo")){nb();nq()}},1100);return}}
+  else{hearts--;combo=0;beep(150,.3);bad($("bq"));if(hearts<=0){stop();fin(sc,beaten+" bosses beaten · "+dmg+" damage");return}}
+  upd();setTimeout(()=>{if($("bo"))nq()},500)};
+ const nq=()=>{lock=false;upd();if(Math.random()<.65){const b=R(QZ);$("bq").innerHTML=`<div class="pic">${b.p}</div><div class="q">${b.q}</div><div class="opts">${S([b.a,...b.w]).map(o=>`<button class="opt">${o}</button>`).join("")}</div>`;
+   $("bq").querySelectorAll(".opt").forEach(e=>e.onclick=()=>{if(lock)return;const ok=e.textContent==b.a;e.classList.add(ok?"ok2":"no");atk(ok)})}
+  else{const x=R(TF);$("bq").innerHTML=`<div class="q">${x.s}</div><div class="tf2"><button>✅ True</button><button>❌ False</button></div>`;
+   $("bq").querySelectorAll("button").forEach((b,i)=>b.onclick=()=>{if(lock)return;const ok=(i==0)==x.a;b.classList.add(ok?"ok2":"no");atk(ok)})}};
+ nb();nq();runT(()=>fin(sc,beaten+" bosses beaten · "+dmg+" damage"))}
+subs();pn();ld();
+</script></body></html>
